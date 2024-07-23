@@ -1,4 +1,3 @@
-# kafka-streams-ref
 # Kafka Streams Application
 
 ## Overview
