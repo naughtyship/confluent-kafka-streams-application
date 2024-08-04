@@ -1,4 +1,4 @@
-# Deploying the App on local machine
+# Deploying the App on Minikube
 ## Prerequisites
 - **Java Development Kit (JDK)**: Ensure you have JDK installed to build the Maven project.
 - **Maven**: Ensure Maven is installed to build the JAR file.
@@ -6,6 +6,7 @@
 - **Kubernetes Cluster**: Ensure you have access to a Kubernetes cluster (e.g., Minikube, Azure Kubernetes Service).
 - **Kubectl**: Ensure `kubectl` is installed and configured to interact with your Kubernetes cluster.
 
+[link to install minikube](https://minikube.sigs.k8s.io/docs/start/?arch=%2Fwindows%2Fx86-64%2Fstable%2F.exe+download)
 ### 1. Build the Jar file
 Use Maven to compile and package your application into a JAR file. Run the following command from the root of your project directory:
 
