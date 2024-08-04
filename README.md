@@ -33,10 +33,6 @@ This document outlines the structure, configuration, and deployment process for 
 - Configures an uncaught exception handler to log and manage runtime exceptions.
 - Adds a state change listener to log Kafka Streams state transitions.
 
-## Pre-Pipeline Setup
-
-Before the CI and CD pipelines, ensure the following steps are completed:
-
 ### Environment Variables
 
 Set up environment variables for:
@@ -59,52 +55,3 @@ Set up environment variables for:
 ### Dependencies
 
 - Include dependencies for Kafka Streams, Confluent Schema Registry, and Avro in the `pom.xml` file for Maven.
-
-## CI Pipeline
-
-### Build the Application
-
-- The CI pipeline uses Maven to build the application, creating a JAR file.
-
-### Create Docker Image
-
-- Builds a Docker image using the Dockerfile, packaging the JAR file and dependencies.
-
-### Run Security Scan
-
-- Downloads WizCLI and runs a security scan on the Docker image.
-- Fails the pipeline if any critical vulnerabilities are found.
-
-### Push Docker Image to ACR
-
-- Pushes the Docker image to Azure Container Registry (ACR) if the security scan passes.
-
-## CD Pipeline
-
-### Deploy to AKS
-
-- Uses a deployment YAML file to deploy the application to Azure Kubernetes Service (AKS).
-- The deployment file specifies the Docker image, environment variables, and configuration details.
-
-### Configuration Management
-
-- Manages environment variables and secrets securely.
-- Ensures the application has access to necessary Kafka broker and schema registry details.
-
-## Summary
-
-The CI/CD pipelines ensure a reliable and secure deployment of the Kafka Streams application:
-
-### CI Pipeline
-
-1. Builds the application with Maven.
-2. Creates a Docker image.
-3. Runs a security scan using WizCLI.
-4. Pushes the Docker image to ACR if no critical vulnerabilities are found.
-
-### CD Pipeline
-
-1. Deploys the application to AKS using a deployment YAML file.
-2. Configures environment variables and secrets.
-
-By following these processes, the application is continuously integrated and deployed with robust security and configuration management, ensuring a reliable deployment to the cloud environment.
