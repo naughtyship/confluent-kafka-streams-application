@@ -16,7 +16,6 @@ import java.util.Properties;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static com.github.stefanbirkner.systemlambda.SystemLambda.*;
 
 public class StreamsAppTest {
 
