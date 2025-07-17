@@ -14,16 +14,25 @@ import org.slf4j.LoggerFactory;
 
 public class StreamsApp {
     private static final Logger logger = LoggerFactory.getLogger(StreamsApp.class);
-    public static void main(String[] args) {
+        public static void main(String[] args) {
         String bootstrapServers = System.getenv("BOOTSTRAP_SERVERS");
         String apiKey = System.getenv("API_KEY");
         String apiSecret = System.getenv("API_SECRET");
 
-        if(bootstrapServers == null || apiKey == null || apiSecret == null) {
+        if (bootstrapServers == null || apiKey == null || apiSecret == null) {
             logger.error("Environment variables BOOTSTRAP_SERVERS, API_KEY, and API_SECRET must be set");
-            System.exit(1);
+
+            if (System.getProperty("test.env") == null) {
+                System.exit(1);
+            } else {
+                return;
+            }
         }
 
+        run(bootstrapServers, apiKey, apiSecret);
+    }
+
+    public static void run(String bootstrapServers, String apiKey, String apiSecret) {
         Properties props = buildProperties(bootstrapServers, apiKey, apiSecret);
         Topology topology = buidTopology();
         KafkaStreams streams = new KafkaStreams(topology, props);
@@ -37,11 +46,15 @@ public class StreamsApp {
             streams.close();
         }));
 
-        streams.start();
-        logger.info("Kafka Streams application started successfully");
+        if (System.getProperty("test.env") == null) {
+            streams.start(); // Run normally in prod
+            logger.info("Kafka Streams application started successfully");
+        } else {
+            logger.info("Kafka Streams initialized for test mode, skipping start()");
+        }
     }
 
-    private static Properties buildProperties(String bootstrapServers, String apiKey, String apiSecret){
+    public static Properties buildProperties(String bootstrapServers, String apiKey, String apiSecret){
         Properties props = new Properties();
         props.put(StreamsConfig.APPLICATION_ID_CONFIG, "streams-app");
         props.put(StreamsConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
